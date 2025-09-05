@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>💙 11 Meses Contigo 💙</title>
+  <!-- Fuente estilo Sonic -->
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Bungee', cursive;
+      color: white;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    /* Fondo estilo Green Hill */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background: url("greenhill.png") repeat-x; /* usa tu imagen descargada */
+      background-size: auto 100%;
+      animation: moverFondo 15s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes moverFondo {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    h1 {
+      font-size: 3.5em;
+      margin-top: 40px;
+      text-shadow: 3px 3px 10px #000;
+      animation: glow 2s infinite alternate;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-top: 10px;
+      color: #ffe600;
+      text-shadow: 2px 2px 6px #000;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff0; }
+      to { text-shadow: 0 0 20px #fff, 0 0 40px #ff4081; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Sonic corriendo de izquierda a derecha */
+    .sonic {
+      width: 130px; /* más pequeño */
+      position: absolute;
+      bottom: 120px;
+      left: -150px; /* inicia fuera de pantalla */
+      animation: correrSonic 8s linear infinite;
+    }
+
+    @keyframes correrSonic {
+      0%   { left: -150px; transform: scaleX(1); opacity: 1; filter: blur(0); }
+      85%  { left: 110%; transform: scaleX(1); opacity: 1; filter: blur(0); }
+      100% { left: 110%; transform: scaleX(1); opacity: 0; filter: blur(8px); }
+    }
+
+    /* Anillos */
+    .ring {
+      position: absolute;
+      bottom: 200px;
+      width: 50px;
+      animation: moverAnillo 6s linear forwards;
+    }
+
+    @keyframes moverAnillo {
+      0% { left: 110%; }
+      100% { left: -100px; }
+    }
+
+    /* Corazones flotando */
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: #ff4d6d;
+      transform: rotate(45deg);
+      animation: flotar 6s infinite ease-in;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: #ff4d6d;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -15px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 15px;
+      top: 0;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+
+    /* Palabras de amor */
+    .palabra {
+      position: absolute;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 3px 3px 6px #000;
+      animation: subir 2s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes subir {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100px); opacity: 0; }
+    }
+
+    /* Texto de agradecimiento */
+    #agradecimiento {
+      font-size: 1.5em;
+      max-width: 900px;
+      margin: 50px auto;
+      line-height: 1.6;
+      color: #fff;
+      text-shadow: 2px 2px 6px #000;
+      white-space: pre-line;
+      border-right: 3px solid #fff;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeZoom 1.5s ease forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeZoom {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>💙 Feliz Mesiversario 💙</h1>
+  <h2>Corremos juntos como Sonic y sus anillos ✨</h2>
+
+  <!-- Texto de agradecimiento -->
+  <div id="agradecimiento"></div>
+
+  <!-- Sonic -->
+  <img id="sonic" class="sonic" src="sonic.png" alt="Sonic corriendo">
+
+  <script>
+    // Texto de agradecimiento con temática Sonic
+    const texto = `Mi amor, hoy celebramos 11 meses juntos 💖.
+Gracias por acompañarme en cada nivel de esta aventura,
+como Sonic recolectando anillos, yo recojo momentos a tu lado ✨.
+
+Tú eres mi anillo dorado más valioso 💍, mi checkpoint seguro 🏁
+y la razón por la que corro con ilusión cada día 💙.
+
+Feliz mesiversario, princesa 👑.
+Sigamos jugando juntos esta historia infinita.`;
+
+    let i = 0;
+    function escribir() {
+      if (i < texto.length) {
+        document.getElementById("agradecimiento").innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(escribir, 50);
+      }
+    }
+    setTimeout(escribir, 2000);
+
+    // Corazones flotantes automáticos
+    function crearCorazones() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(crearCorazones, 500);
+
+    // Sonic
+    const sonic = document.getElementById("sonic");
+
+    // Anillos
+    function crearAnillos() {
+      const ring = document.createElement("img");
+      ring.src = "ring.png";
+      ring.className = "ring";
+      ring.style.bottom = (180 + Math.random() * 50) + "px";
+      ring.style.left = "100%";
+      document.body.appendChild(ring);
+
+      // Revisión de colisión cada 100ms
+      const checkCollision = setInterval(() => {
+        const sonicRect = sonic.getBoundingClientRect();
+        const ringRect = ring.getBoundingClientRect();
+
+        if (
+          sonicRect.left < ringRect.right &&
+          sonicRect.right > ringRect.left &&
+          sonicRect.top < ringRect.bottom &&
+          sonicRect.bottom > ringRect.top
+        ) {
+          ring.remove();
+          clearInterval(checkCollision);
+        }
+      }, 100);
+
+      // Remover después de 6s si no hay colisión
+      setTimeout(() => {
+        ring.remove();
+        clearInterval(checkCollision);
+      }, 6000);
+    }
+    setInterval(crearAnillos, 2000);
+
+    // Palabras de amor al hacer clic
+    const palabras = ["Te amo 💖", "Mi vida 💕", "Mi cielo 🌙", "Amor eterno 💍", "Eres mi todo 💙", "Mi princesa 👑"];
+    document.addEventListener("click", (e) => {
+      const palabra = document.createElement("div");
+      palabra.className = "palabra";
+      palabra.innerText = palabras[Math.floor(Math.random() * palabras.length)];
+      palabra.style.left = e.clientX + "px";
+      palabra.style.top = e.clientY + "px";
+      document.body.appendChild(palabra);
+      setTimeout(() => palabra.remove(), 2000);
+    });
+  </script>
+</body>
+</html>
